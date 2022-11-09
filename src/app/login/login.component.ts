@@ -1,4 +1,7 @@
+import { FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-login',
@@ -6,41 +9,40 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  userDetails:any={
-    1000:{acno:1000,user:"arjun",pass:1000,balance:1000},
-    1001:{acno:1001,user:"arjun",pass:1001,balance:1000}
-  }
-  acno = "";
-  pswd = "";
+  
+
+  loginForm=this.fb.group({
+    acno:['',[Validators.required,Validators.pattern('[0-9]*'),Validators.minLength(4),Validators.maxLength(8)]],
+    pswd:['',[Validators.required,Validators.pattern('[0-9]*'),Validators.minLength(4),Validators.maxLength(8)]]
+  })
   
 
   
-  constructor() { }
+  constructor(private router:Router, private service:DataService, private fb:FormBuilder) { }
 
   ngOnInit(): void {
   }
 
-  changeacc(event:any){
-    this.acno=(event.target.value)
-  }
-  changepass(event:any){
-    this.pswd=(event.target.value)
-  }
+  // changeacc(event:any){
+  //   this.acno=(event.target.value)
+  // }
+  // changepass(event:any){
+  //   this.pswd=(event.target.value)
+  // }
 
   logIn(){
-    var acno=this.acno;
-    var pswd=this.pswd;
-    var userDetails=this.userDetails
-    if(acno in userDetails){
-      if(pswd==userDetails[acno]["pass"]){
-        alert("Success")
-      }
-      else{
-        alert("wrong pas")
-      }
+    let acno=this.loginForm.value.acno
+    let pswd=this.loginForm.value.pswd
+
+    const result=this.service.login(acno,pswd)
+    if(this.loginForm.valid){
+    if(result){
+      alert("Login Successfull")
+      this.router.navigateByUrl('dashboard')
     }
-    else{
-      alert("wrong user")
-    }
+  }
+  else{
+    alert("Enter Valid Details")
+  }
   }
 }

@@ -1,4 +1,5 @@
 <div class="container">
+    <form [formGroup]="RegistrationForm">
     <div class="row">
         <div class="col-1"></div>
         <div class="col-10">
@@ -13,13 +14,16 @@
                                 </h2>
                                 <p class="accc mt-4">
                                     Already A Member?
-                                    <a href="./index.html"><span class="reg text-primary">Log In</span></a>
+                                    <a class="reg text-primary" routerLink="">Log In</a>
                                 </p>
 
-                                <input class="input mt-5" type="text" placeholder="Username" id="user" />
-                                <input class="input mt-2" type="text" placeholder="Account Number" id="acc" />
+                                <input formControlName="user"  class="input mt-5" type="text" placeholder="Username" id="user" />
+                                <div *ngIf="this.RegistrationForm.get('user')?.errors&&this.RegistrationForm.get('user')?.touched" style="color: red;">Invalid Username</div>
+                                <input formControlName="acc" class="input mt-2" type="text" placeholder="Account Number" id="acc" />
                                 <br />
-                                <input class="input mt-2" type="password" placeholder="Password" id="pass" />
+                                <div *ngIf="this.RegistrationForm.get('acc')?.errors&&this.RegistrationForm.get('acc')?.touched" style="color: red;">Invalid Account Number</div>
+                                <input formControlName="pass" class="input mt-2" type="password" placeholder="Password" id="pass" />
+                                <div *ngIf="this.RegistrationForm.get('pass')?.errors&&this.RegistrationForm.get('pass')?.touched" style="color: red;">Invalid Password</div>
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" onclick="myFunction()"
                                         id="exampleCheck1" />
@@ -29,7 +33,7 @@
                                 <!-- </div> -->
 
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <button class="btn btn-primary mt-5 mb-5 shadow" onclick="signUp()"
+                                    <button class="btn btn-primary mt-5 mb-5 shadow" (click)="signUp()"
                                         type="button">
                                         Create account
                                     </button>
@@ -43,4 +47,5 @@
         </div>
         <div class="col-1"></div>
     </div>
+</form>
 </div>
