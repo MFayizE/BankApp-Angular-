@@ -1,36 +1,53 @@
-
-<div class="container p-4 d-flex justify-content-center">
-    <h1>Welcome {{user}}</h1>
-</div>
-<div class="container p-4 d-flex justify-content-center">
-    <div><a routerLink="/transaction" routerLinkActive="active">Transaction Details</a> </div>
-</div>
-<div class="parent">
-    <div class="child">
-        
+<div class="overflow">
+<div class="row mt-2 ps-5 pe-5 navbar">
+    <div class="col-10">
+        <h1>Welcome <span class="text-primary user">{{user}}</span><span class="dot text-primary">.</span></h1>
+        <h6>System Date : {{systemDate | date : 'short'}}</h6>
+        <div><a class="text-success " routerLink="/transaction" routerLinkActive="active">Transaction Details</a> </div>
     </div>
+    <div class="col-2 d-flex ">
+        <button class="btn btn-sm btn-danger " (click)="delete()">Delete</button> 
+        <button class="btn btn-sm btn-warning ms-2" (click)="logOut()">Log Out</button>
+    </div>
+    
 </div>
 
-<div class="balancechange d-flex justify-content-center">
+<div class="text-center deletefield" *ngIf="deleteAccount">
+    <h4>Do you want to delete <span class="text-primary user">{{user}}</span> with Account Number : <span class="text-primary user">{{accountNumber}}</span><span class="dot text-primary">.</span></h4>
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-danger btn-sm" (click)="deleteOn()">YES</button>
+                <button class=" btn btn-success btn-sm ms-2" (click)="deleteOff()">NO</button>
+            </div>
+        </div>
+        <div class="col-4"></div>
+    </div>
+    
+</div>
+<div class="balancechange d-flex justify-content-center" *ngIf="!deleteAccount">
     <div class="deposit">
         <div class="card shadow">
             <div class="card-body">
                 <div class="container">
+                    <form [formGroup]="depositForm">
                     <h2 class="mt-2">Deposit<span class="dot text-primary">.</span></h2>
-                    <input class="input mt-3" [(ngModel)]="depo_acno" id="acc" type="text" placeholder="Account Number">
+                    <input class="input mt-3" formControlName="acno" id="acc" type="text" placeholder="Account Number">
                     <br>
-                    <input class="input mt-2" [(ngModel)]="depo_pswd" id="pass" type="password" placeholder="Password">
+                    <input class="input mt-2" formControlName="pswd" id="pass" type="password" placeholder="Password">
                     <br>
                     <!-- <div class="form-check">
                                     <input type="checkbox" class="form-check-input" onclick="myFunction()"
                                         id="exampleCheck1">
                                     <label class="form-check-label " for="exampleCheck1">Show Password</label> <br>
                                 </div> -->
-                    <input class="input mt-2" [(ngModel)]="depo_amount" id="pass" type="text" placeholder="Amount"> <br>
+                    <input class="input mt-2" formControlName="amount" id="pass" type="text" placeholder="Amount"> <br>
                     <div class="d-flex justify-content-center align-items-center">
                         <button class="btn btn-sm btn-primary mt-5 mb-4 shadow" type="button"
                             (click)="Deposit()">Deposit</button>
                     </div>
+                </form>
                 </div>
             </div>
         </div>
@@ -42,24 +59,28 @@
         <div class="card shadow">
             <div class="card-body">
                 <div class="container">
+                    <form [formGroup]="withdrawForm">
                     <h2 class="mt-2">Withdraw<span class="dot text-primary">.</span></h2>
-                    <input class="input mt-3" [(ngModel)]="withd_acno" id="acc" type="text" placeholder="Account Number">
+                    <input class="input mt-3" formControlName="acno"  id="acc" type="text" placeholder="Account Number">
                     <br>
-                    <input class="input mt-2" [(ngModel)]="withd_pswd" id="pass" type="password" placeholder="Password">
+                    <input class="input mt-2" formControlName="pswd" id="pass" type="password" placeholder="Password">
                     <br>
                     <!-- <div class="form-check">
                         <input type="checkbox" class="form-check-input" onclick="myFunction()"
                             id="exampleCheck1">
                         <label class="form-check-label " for="exampleCheck1">Show Password</label> <br>
                     </div> -->
-                    <input class="input mt-2" [(ngModel)]="withd_amount" id="pass" type="text" placeholder="Amount"> <br>
+                    <input class="input mt-2" formControlName="amount" id="pass" type="text" placeholder="Amount"> <br>
                     <div class="d-flex justify-content-center align-items-center">
                         <button class="btn btn-sm btn-primary mt-5 mb-4 shadow" type="button"
                             (click)="Withdraw()">Withdraw</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+
+</div>
 
 </div>

@@ -21,6 +21,9 @@ export class LoginComponent implements OnInit {
   constructor(private router:Router, private service:DataService, private fb:FormBuilder) { }
 
   ngOnInit(): void {
+    localStorage.removeItem('CurrentAccount')
+    localStorage.removeItem('CurrentUser')
+    localStorage.removeItem('token')
   }
 
   // changeacc(event:any){
@@ -36,13 +39,25 @@ export class LoginComponent implements OnInit {
 
     const result=this.service.login(acno,pswd)
     if(this.loginForm.valid){
-    if(result){
-      alert("Login Successfull")
-      this.router.navigateByUrl('dashboard')
+      const result=this.service.login(acno,pswd).subscribe((result:any) => {
+        localStorage.setItem('CurrentAccount',JSON.stringify(result.currentacno))
+        localStorage.setItem("CurrentUser", JSON.stringify(result.currentuser))
+        localStorage.setItem("token", JSON.stringify(result.token))
+        alert(result.message);
+        this.router.navigateByUrl('dashboard');
+      },
+      result => {
+        alert(result.error.message)
+        this.router.navigateByUrl('');
+      })
     }
-  }
-  else{
-    alert("Enter Valid Details")
-  }
+  //   if(result){
+  //     alert("Login Successfull")
+  //     this.router.navigateByUrl('dashboard')
+  //   }
+  // }
+  // else{
+  //   alert("Enter Valid Details")
+  // }
   }
 }

@@ -7,7 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { HttpClientModule } from '@angular/common/http';
 import { TransactionComponent } from './transaction/transaction.component';
 import {MatButtonModule} from '@angular/material/button';
 
@@ -17,7 +17,8 @@ import {MatButtonModule} from '@angular/material/button';
     LoginComponent,
     RegisterComponent,
     DashboardComponent,
-    TransactionComponent
+    TransactionComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -25,7 +26,8 @@ import {MatButtonModule} from '@angular/material/button';
     FormsModule,
     MatButtonModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

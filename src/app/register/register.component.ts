@@ -24,16 +24,24 @@ RegistrationForm=this.fb.group({
     let acc=this.RegistrationForm.value.acc
     let pass=this.RegistrationForm.value.pass
     let user=this.RegistrationForm.value.user
-    const result=this.service.register(acc,user,pass)
+    
     if(this.RegistrationForm.valid){
-    if(result){
-      alert("Successfully Registered")
-      this.router.navigateByUrl('')
-    }
-    else{
-      alert("Failed to register")
-      this.router.navigateByUrl('register')
-    }
+      const result=this.service.register(acc,user,pass).subscribe((result:any) => {
+        alert(result.message);
+        this.router.navigateByUrl('');
+      },
+      result => {
+        alert(result.error.message)
+        this.router.navigateByUrl('register');
+      })
+    // if(result){
+    //   alert("Successfully Registered")
+    //   this.router.navigateByUrl('')
+    // }
+    // else{
+    //   alert("Failed to register")
+    //   this.router.navigateByUrl('register')
+    // }
   }
   else{
     alert("Enter Valid Details")
